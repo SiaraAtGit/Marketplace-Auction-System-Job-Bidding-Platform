@@ -34,23 +34,6 @@ This project is a web-based marketplace that allows job posters to publish tasks
 
 ---
 
-
-Project Structure
-bash
-Copy code
-src/
- ├─ main/
- │   ├─ java/com/example/marketplace/
- │   │   ├─ controller/        # REST controllers
- │   │   ├─ model/             # Job and Bid entities
- │   │   ├─ repository/        # JPA repositories
- │   │   └─ service/           # Business logic
- │   └─ resources/
- │       ├─ static/            # HTML, JS, CSS files
- │       └─ application.properties
- └─ test/
-     └─ java/com/example/marketplace/
-         └─ MarketplaceApplicationTests.java
          
 ## Future Enhancements
 - Add user authentication & authorization.
