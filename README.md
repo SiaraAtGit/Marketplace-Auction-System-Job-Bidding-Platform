@@ -6,11 +6,7 @@ A real-time job auction platform where users can post jobs, place bids, and auto
 - [Overview](#overview)  
 - [Features](#features)  
 - [Technologies](#technologies)  
-- [Setup & Installation](#setup--installation)  
-- [Usage](#usage)  
-- [Project Structure](#project-structure)  
 - [Future Enhancements](#future-enhancements)  
-- [License](#license)  
 
 ---
 
