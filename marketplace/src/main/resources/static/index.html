@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+    <title>Marketplace Home</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .winner { color: green; font-weight: bold; }
+        .job-item { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+<h1>Marketplace</h1>
+<a href="/post.html">Publish new job</a>
+
+<h2>Recent Jobs</h2>
+<ul id="recent"></ul>
+
+<h2>Active Jobs</h2>
+<ul id="active"></ul>
+
+<script src="app.js"></script>
+<script>
+async function loadHome() {
+    try {
+        const recent = await fetchJSON('/api/jobs/recent');
+        const active = await fetchJSON('/api/jobs/active');
+
+        // Build Recent Jobs list with winner info if present
+        document.getElementById('recent').innerHTML = recent.map(j => {
+            const winnerText = j.winnerBid
+                ? `<span class="winner">Winner: ${j.winnerBid.bidderName} (₹${j.winnerBid.amount})</span>`
+                : `<em>No winner yet</em>`;
+            return `<li class="job-item">
+                        <a href="job.html?id=${j.id}">${j.description}</a><br>
+                        ${winnerText}
+                    </li>`;
+        }).join('');
+
+        // Active Jobs list only shows jobs that are still open
+        document.getElementById('active').innerHTML = active.map(j => {
+            return `<li class="job-item">
+                        <a href="job.html?id=${j.id}">${j.description}</a>
+                    </li>`;
+        }).join('');
+    } catch (err) {
+        console.error("Failed to load jobs:", err);
+        document.getElementById('recent').innerHTML = "<li>Error loading recent jobs</li>";
+        document.getElementById('active').innerHTML = "<li>Error loading active jobs</li>";
+    }
+}
+
+// Auto-refresh every 10 seconds to update winners and active jobs
+setInterval(loadHome, 10000);
+
+loadHome();
+</script>
+</body>
+</html>

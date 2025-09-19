@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <title>Publish New Job</title>
+</head>
+<body>
+<h1>Publish New Job</h1>
+<a href="/index.html">Back to Home</a>
+
+<form id="jobForm">
+    <label>Description:</label><br>
+    <textarea id="description" maxlength="16384" required></textarea><br><br>
+
+    <label>Requirements:</label><br>
+    <textarea id="requirements" maxlength="16384" required></textarea><br><br>
+
+    <label>Poster Name:</label><br>
+    <input type="text" id="posterName" required><br><br>
+
+    <label>Poster Contact:</label><br>
+    <input type="text" id="posterContact" required><br><br>
+
+    <label>Expiry Date:</label><br>
+    <input type="datetime-local" id="expiresAt" required><br><br>
+
+    <button type="submit">Publish Job</button>
+</form>
+
+<p id="status"></p>
+
+<script src="app.js"></script>
+<script>
+document.getElementById('jobForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const job = {
+        description: document.getElementById('description').value,
+        requirements: document.getElementById('requirements').value,
+        posterName: document.getElementById('posterName').value,
+        posterContact: document.getElementById('posterContact').value,
+        expiresAt: document.getElementById('expiresAt').value
+    };
+
+    try {
+        const result = await postJSON('/api/jobs', job);
+        document.getElementById('status').textContent = "Job published successfully!";
+        document.getElementById('jobForm').reset();
+    } catch (err) {
+        document.getElementById('status').textContent = "Error publishing job!";
+        console.error(err);
+    }
+});
+</script>
+</body>
+</html>
